@@ -3,5 +3,10 @@ version: '3'
 services:
     app:
         build: .
+        ports:
+            - 8080:8080
+        command: gunicorn -b 0.0.0.0:8080 manage:app
         volumes:
             - ./:/app:cached
+        environment:
+            SECRET_KEY: XXXXXXXX
