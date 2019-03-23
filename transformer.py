@@ -20,8 +20,6 @@ class AchievementTransformer:
     @staticmethod
     def transform(game_list: List[dict], player_list: List[dict]) -> List[Achievement]:
         items = len(game_list)
-        print(items)
-        print(len(player_list))
         if items != len(player_list):
             raise ValueError('Should match the list of both.')
 

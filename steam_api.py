@@ -66,13 +66,9 @@ if __name__ == '__main__':
     appId = '391220'
     userId = '76561198109613067'
 
-    try:
-        api = SteamAPI(Config())
-        # lol = api.fetch('ISteamUser/ResolveVanityURL/v1/', {'vanityurl': 'Saphyel'})
-        # PlayerRepository(api).find_games(userId)
-        # UserRepository(api).get_summary(userId)
-        # StatsRepository(api).game_details(appId)
-        StatsRepository(api).player_progress(userId, appId)
-    except ValueError as exception:
-        pass
-        # print(exception)
+    api = SteamAPI(Config())
+    # lol = api.fetch('ISteamUser/ResolveVanityURL/v1/', {'vanityurl': 'Saphyel'})
+    # PlayerRepository(api).find_games(userId)
+    # UserRepository(api).get_summary(userId)
+    # StatsRepository(api).game_details(appId)
+    # StatsRepository(api).player_progress(userId, appId)

@@ -8,8 +8,7 @@ LABEL "com.github.actions.color"="green"
 ENV PIPENV_DEV=1
 ENV PIPENV_SYSTEM=1
 
-ADD * ./
-RUN pip install pipenv;pipenv install --deploy
+RUN pip install pipenv
 
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
