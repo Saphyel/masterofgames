@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}{{ title }}: {{ achievements|length }} achievements{% endblock %}
+{% block body %}
+<div  class="columns is-multiline">
+{% for item in achievements %}
+    <div class="column is-half">
+        <div class="card">
+            <header class="card-header"><p class="card-header-title">{{ item.name }}</p></header>
+            <div class="card-content">
+                Description: {{ item.description }}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

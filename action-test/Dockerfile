@@ -1,0 +1,17 @@
+FROM python:3.7-alpine
+
+LABEL "com.github.actions.name"="Test code"
+LABEL "com.github.actions.description"="Execute all the test from the code base"
+LABEL "com.github.actions.icon"="play-circle"
+LABEL "com.github.actions.color"="green"
+
+WORKDIR /app
+
+ENV PIPENV_DEV=1
+ENV PIPENV_SYSTEM=1
+
+ADD * ./
+RUN pip install pipenv;pipenv install --deploy
+
+ADD entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]

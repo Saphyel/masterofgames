@@ -9,4 +9,4 @@ services:
         volumes:
             - ./:/app:cached
         environment:
-            SECRET_KEY: XXXXXXXX
+            SECRET_KEY: XXXXXXX
