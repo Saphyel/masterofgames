@@ -2,35 +2,18 @@ from unittest import TestCase, mock
 
 import fixtures
 from steam_api import SteamAPI, UserRepository, PlayerRepository, StatsRepository
+from requests_mock import MockResponse
 
 
-class MockResponse:
-    def __init__(self, valid: bool, result: dict):
-        self._valid = valid
-        self._content = result
-
-    @property
-    def ok(self) -> bool:
-        return self._valid
-
-    @property
-    def text(self) -> str:
-        return 'error'
-
-    def json(self):
-        return self._content
-
-
-@mock.patch('steam_api.Config')
 class TestApi(TestCase):
     @mock.patch('requests.get', autospec=True, spec_set=True, return_value=MockResponse(True, fixtures.user_data()))
-    def test_valid_user_data(self, mock_requests, mock_config) -> None:
-        self.assertEqual(fixtures.user_data(), SteamAPI(mock_config).fetch('ISteamUser/', {'vanity': 'xxx'}))
+    def test_valid_user_data(self, mock_requests) -> None:
+        self.assertEqual(fixtures.user_data(), SteamAPI().fetch('ISteamUser/', {'vanity': 'xxx'}))
 
     @mock.patch('requests.get', autospec=True, spec_set=True, return_value=MockResponse(False, fixtures.user_data()))
-    def test_invalid_user_data(self, mock_requests, mock_config) -> None:
+    def test_invalid_user_data(self, mock_requests) -> None:
         with self.assertRaises(RuntimeError) as context:
-            SteamAPI(mock_config).fetch('ISteamUser/', {'vanity': 'x'})
+            SteamAPI().fetch('ISteamUser/', {'vanity': 'x'})
         self.assertTrue('error' in str(context.exception))
 
 

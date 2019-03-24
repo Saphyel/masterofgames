@@ -6,7 +6,14 @@ services:
         ports:
             - 8080:8080
         command: gunicorn -b 0.0.0.0:8080 manage:app
+        working_dir: /app
         volumes:
             - ./:/app:cached
+            - ~/.ssh/id_rsa:/root/.ssh/id_rsa:cached
+            - $SSH_AUTH_SOCK:/ssh-agent:cached
         environment:
-            SECRET_KEY: XXXXXXX
+            SSH_AUTH_SOCK: /ssh-agent
+            DEBUG: 1
+            APP_SETTINGS: "config.DevelopmentConfig"
+            STEAM_API_KEY: 'XXXXXXX'
+            STEAM_API_URL: 'https://api.steampowered.com/'

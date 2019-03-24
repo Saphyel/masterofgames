@@ -1,13 +1,12 @@
 import requests
-
-from config import Config
+import os
 
 
 # Wrapper
 class SteamAPI:
-    def __init__(self, config: Config):
-        self._key = config.key
-        self._base_url = config.base_url
+    def __init__(self):
+        self._key = os.environ.get('STEAM_API_KEY', 'XXXXXXX')
+        self._base_url = os.environ.get('STEAM_API_URL', 'https://api.steampowered.com/')
 
     def fetch(self, endpoint: str, payload: dict = {}) -> dict:
         payload.update({'key': self._key})
