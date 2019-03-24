@@ -1,6 +1,6 @@
-workflow "Deployment" {
+workflow "Deploy site" {
   on = "push"
-  resolves = "Heroku deployment"
+  resolves = ["Heroku release"]
 }
 
 action "Run unit test" {
@@ -16,14 +16,14 @@ action "Heroku login" {
 
 action "Heroku push" {
   uses = "actions/heroku@master"
-  needs = "login"
+  needs = ["Heroku login"]
   args = "container:push -a gentle-escarpment-23841 web"
   secrets = ["HEROKU_API_KEY"]
 }
 
 action "Heroku release" {
   uses = "actions/heroku@master"
-  needs = "push"
+  needs = ["Heroku push"]
   args = "container:release -a gentle-escarpment-23841 web"
   secrets = ["HEROKU_API_KEY"]
 }
