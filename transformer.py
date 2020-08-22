@@ -1,33 +1,29 @@
-from typing import List
+__strict__ = True
 
-from model_v1 import Profile, Game, Achievement
+from model import Profile, Game, Achievement, GameProgress
 
 
 class ProfileTransformer:
     @staticmethod
     def transform(summary: dict) -> Profile:
         return Profile(summary['steamid'], summary['personaname'], summary['avatar'], summary['profileurl'],
-                       summary['realname'], summary['loccountrycode'])
+                       summary['realname'], summary['loccountrycode'], summary['games'])
 
 
 class GameTransformer:
     @staticmethod
-    def transform(game_list: List[dict]) -> List[Game]:
-        return [Game(item['appid'], item['name'], item['playtime_forever'], item['img_logo_url']) for item in game_list]
+    def transform(game: dict) -> Game:
+        return Game(game['appid'], game['name'], game['playtime_forever'], game['img_logo_url'])
 
 
 class AchievementTransformer:
     @staticmethod
-    def transform(game_list: List[dict], player_list: List[dict]) -> List[Achievement]:
-        items = len(game_list)
-        if items != len(player_list):
-            raise ValueError('Should match the list of both.')
+    def transform(achievement: dict) -> Achievement:
+        return Achievement(achievement['name'], achievement['displayName'], achievement.get('description', ''),
+                           achievement['icon'], achievement['hidden'] == 1, achievement['achieved'] == 1)
 
-        result = []
-        for i in range(items):
-            item = game_list[i]
-            result.append(
-                Achievement(item['name'], item['displayName'], item.get('description', ''), item['icon'],
-                            item['hidden'] == 1, player_list[i]['achieved'] == 1))
 
-        return result
+class GameProgressTransformer:
+    @staticmethod
+    def transform(progress: dict) -> GameProgress:
+        return GameProgress(progress['title'], progress['achievements'])

@@ -1,3 +1,5 @@
+__strict__ = True
+
 from dataclasses import dataclass
 
 
@@ -9,6 +11,7 @@ class Profile:
     url: str
     real_name: str
     country_code: str
+    games: list
 
 
 @dataclass
@@ -27,3 +30,9 @@ class Achievement:
     icon: str
     hidden: bool
     achieved: bool
+
+
+@dataclass
+class GameProgress:
+    name: str
+    achievements: list

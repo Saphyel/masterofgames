@@ -1,16 +1,31 @@
 {% extends "layout.html" %}
-{% block title %}{{ title }}: {{ achievements|length }} achievements{% endblock %}
+{% block title %} {{ details.name }}: {{ details.achievements|length }} achievements{% endblock %}
 {% block body %}
-<div  class="columns is-multiline">
-{% for item in achievements %}
-    <div class="column is-half">
-        <div class="card">
-            <header class="card-header"><p class="card-header-title">{{ item.name }}</p></header>
-            <div class="card-content">
-                Description: {{ item.description }}
-            </div>
-        </div>
-    </div>
-{% endfor %}
-</div>
+    <table class="table is-striped">
+        <thead>
+            <tr><th>Icon</th><th>Hidden</th><th>Achieved</th><th>Name</th><th>Description</th><th>Search</th></tr>
+        </thead>
+        <tbody>
+        {% for game in details.achievements %}
+            <tr>
+                <td>
+                    <figure class="image"><img alt="{{ game.name }} logo" src="{{ game.icon }}"/></figure>
+                </td>
+                <td class="pt-5"><input type="checkbox" disabled {% if game.hidden == 1 %}checked{% endif %}/></td>
+                <td class="pt-5"><input type="checkbox" disabled {% if game.achieved == 1 %}checked{% endif %}/></td>
+                <td class="pt-5">{{ game.name }}</td>
+                <td class="pt-5">{{ game.description }}</td>
+                <td class="pt-5">{% if game.achieved != 1 %}
+                    <a href="https://www.youtube.com/results?sp=EgIQAQ%253D%253D&search_query={{ details.title }}+{{ game.name }}">
+                        Link
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr><th>Icon</th><th>Hidden</th><th>Achieved</th><th>Name</th><th>Description</th><th>Search</th></tr>
+        </tfoot>
+    </table>
 {% endblock %}

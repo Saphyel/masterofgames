@@ -1,11 +1,9 @@
-class MockResponse:
-    def __init__(self, valid: bool, result: dict):
-        self._valid = valid
-        self._content = result
+__strict__ = True
 
-    @property
-    def ok(self) -> bool:
-        return self._valid
+class MockResponse:
+    def __init__(self, code: int, result: dict):
+        self.status_code = code
+        self._content = result
 
     @property
     def text(self) -> str:

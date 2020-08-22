@@ -1,3 +1,5 @@
+__strict__ = True
+
 import os
 
 

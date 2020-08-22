@@ -1,4 +1,6 @@
-from model_v1 import Profile, Game, Achievement
+__strict__ = True
+
+from model import Profile, Game, Achievement
 
 
 def user_data() -> dict:
@@ -54,6 +56,34 @@ def player_data() -> dict:
          'img_icon_url': '8a5d8f2d1cb52b21eaf4f6609592c6634731c962',
          'img_logo_url': 'd644a74bacd0ecfedf6b68806c6ad6f6253a17fa', 'has_community_visible_stats': True},
     ]}}
+
+
+def profile_raw_data() -> dict:
+    return {'response': {
+        'games': [
+            {'appid': 219990, 'name': 'Grim Dawn', 'playtime_forever': 1534,
+             'img_icon_url': '762057f2b14463ae1cbf0701a4cdb25cf94e8a0c',
+             'img_logo_url': '8021ad6119b367593f1b1536aafd11397fb24ae9', 'has_community_visible_stats': True},
+        ],
+        'players': [{
+            'steamid': '76561198109613067',
+            'communityvisibilitystate': 3,
+            'profilestate': 1,
+            'personaname': 'Saphyel',
+            'lastlogoff': 1553126036,
+            'profileurl': 'https://steamcommunity.com/id/Saphyel/',
+            'avatar': 'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/46/464cde033aaa608ede90255f7dd869954aee68a4.jpg',
+            'avatarmedium': 'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/46/464cde033aaa608ede90255f7dd869954aee68a4_medium.jpg',
+            'avatarfull': 'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/46/464cde033aaa608ede90255f7dd869954aee68a4_full.jpg',
+            'personastate': 0,
+            'realname': 'Carlos',
+            'primaryclanid': '103582791429521408',
+            'timecreated': 1380828090,
+            'personastateflags': 0,
+            'loccountrycode': 'GB',
+            'locstatecode': '17'
+        }]
+    }}
 
 
 def game_stats_data() -> dict:
@@ -812,10 +842,18 @@ def player_stats_data() -> dict:
     }}
 
 
+def invalid_player_stats_data() -> dict:
+    return {'playerstats': {'error': 'Requested app has no stats', 'success': False}}
+
+
+def empty_player_stats_data() -> dict:
+    return {'playerstats': {}}
+
+
 def profile_data() -> Profile:
     data = summary_data()['response']['players'][0]
     return Profile(data['steamid'], data['personaname'], data['avatar'], data['profileurl'], data['realname'],
-                   data['loccountrycode'])
+                   data['loccountrycode'], [game_data()])
 
 
 def game_data() -> Game:
