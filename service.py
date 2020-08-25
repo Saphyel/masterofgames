@@ -5,10 +5,10 @@ from transformer import ProfileTransformer, GameTransformer, AchievementTransfor
 
 
 class ProfileService:
-    def __init__(self):
-        self._user_repository = UserRepository()
+    def __init__(self, user_repository: UserRepository, player_repository: PlayerRepository):
+        self._user_repository = user_repository
         self._profile_transformer = ProfileTransformer
-        self._player_repository = PlayerRepository()
+        self._player_repository = player_repository
         self._game_transformer = GameTransformer
 
     def get_user_id(self, username: str):
@@ -22,8 +22,8 @@ class ProfileService:
 
 
 class AchievementService:
-    def __init__(self):
-        self._repository = StatsRepository()
+    def __init__(self, repository: StatsRepository):
+        self._repository = repository
         self._game_transformer = GameProgressTransformer
         self._achievement_transformer = AchievementTransformer
 

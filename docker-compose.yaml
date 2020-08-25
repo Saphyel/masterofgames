@@ -8,7 +8,3 @@ services:
         command: gunicorn -b 0.0.0.0:80 manage:app
         volumes:
             - ./:/app:cached
-        environment:
-            SSH_AUTH_SOCK: /ssh-agent
-            DEBUG: 1
-            APP_SETTINGS: "config.DevelopmentConfig"

@@ -1,17 +1,16 @@
 __strict__ = True
 
 import requests
-import os
 
 
 # Wrapper
 class SteamClient:
-    def __init__(self):
-        self._key = os.environ.get('STEAM_API_KEY', 'XXXXXXX')
+    def __init__(self, secret: str):
+        self._secret = secret
         self._base_url = 'https://api.steampowered.com/'
 
-    def fetch(self, endpoint: str, payload: dict=None) -> dict:
-        payload.update({'key': self._key})
+    def fetch(self, endpoint: str, payload: dict = None) -> dict:
+        payload.update({'key': self._secret})
         result = requests.get(self._base_url + endpoint, params=payload, timeout=3)
         if result.status_code == 403:
             raise ValueError('Invalid credentials')
@@ -24,8 +23,8 @@ class SteamClient:
 class UserRepository:
     RESOURCE = 'ISteamUser/'
 
-    def __init__(self):
-        self._client = SteamClient()
+    def __init__(self, client: SteamClient):
+        self._client = client
 
     def find_user_id(self, name: str) -> str:
         result = self._client.fetch(self.RESOURCE + 'ResolveVanityURL/v1/', {'vanityurl': name})
@@ -42,8 +41,8 @@ class UserRepository:
 class PlayerRepository:
     RESOURCE = 'IPlayerService/'
 
-    def __init__(self):
-        self._client = SteamClient()
+    def __init__(self, client: SteamClient):
+        self._client = client
 
     def find_games(self, user_id: str) -> list:
         result = self._client.fetch(self.RESOURCE + 'GetOwnedGames/v1/', {'steamid': user_id, 'include_appinfo': '1'})
@@ -53,8 +52,8 @@ class PlayerRepository:
 class StatsRepository:
     RESOURCE = 'ISteamUserStats/'
 
-    def __init__(self):
-        self._client = SteamClient()
+    def __init__(self, client: SteamClient):
+        self._client = client
 
     def game_details(self, game_id: str) -> list:
         result = self._client.fetch(self.RESOURCE + 'GetSchemaForGame/v2/', {'appid': game_id})

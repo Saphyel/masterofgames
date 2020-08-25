@@ -2,11 +2,17 @@ __strict__ = True
 
 import os
 from flask import Flask, render_template, request, redirect, url_for
+from dotenv import load_dotenv
 
 from service import ProfileService, AchievementService
+from repository import SteamClient, UserRepository, PlayerRepository, StatsRepository
+
+for file in os.listdir("./"):
+    if file.startswith(".env"):
+        load_dotenv(file)
 
 app = Flask(__name__)
-app.config.from_object(os.environ['APP_SETTINGS'])
+client = SteamClient(os.environ.get('STEAM_API_KEY'))
 
 
 @app.errorhandler(404)
@@ -27,7 +33,7 @@ def index2() -> any:
 @app.route("/<name>", methods=['GET'])
 def games(name: str) -> any:
     user_id = name
-    service = ProfileService()
+    service = ProfileService(UserRepository(client), PlayerRepository(client))
     if not name.isdigit():
         user_id = service.get_user_id(name)
 
@@ -43,7 +49,7 @@ def games(name: str) -> any:
 
 @app.route("/<user_id>/<game_id>", methods=['GET'])
 def achievements(user_id: str, game_id: str) -> any:
-    service = AchievementService()
+    service = AchievementService(StatsRepository(client))
 
     try:
         return render_template('achievements.html', details=service.get_achievements(user_id, game_id))
