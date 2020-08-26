@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "steamhelp"
+name = "masterofgames"
 version = "2.0.0"
 description = "Helps you get all the achievements from your games"
 authors = ["Saphyel"]
