@@ -1,6 +1,6 @@
 __strict__ = True
 
-from model import Profile, Game, Achievement, GameProgress
+from .model import Profile, Game, Achievement, GameProgress
 
 
 class ProfileTransformer:

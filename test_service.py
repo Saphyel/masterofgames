@@ -2,8 +2,8 @@ __strict__ = True
 
 from unittest import TestCase, mock
 
-from service import ProfileService, AchievementService
-from repository import SteamClient, UserRepository, PlayerRepository, StatsRepository
+from masterofgames.service import ProfileService, AchievementService
+from masterofgames.repository import SteamClient, UserRepository, PlayerRepository, StatsRepository
 import fixtures
 from requests_mock import MockResponse
 

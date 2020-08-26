@@ -1,7 +1,7 @@
 __strict__ = True
 
-from repository import UserRepository, PlayerRepository, StatsRepository
-from transformer import ProfileTransformer, GameTransformer, AchievementTransformer, GameProgressTransformer
+from .repository import UserRepository, PlayerRepository, StatsRepository
+from .transformer import ProfileTransformer, GameTransformer, AchievementTransformer, GameProgressTransformer
 
 
 class ProfileService:

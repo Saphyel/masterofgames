@@ -4,8 +4,8 @@ import os
 from flask import Flask, render_template, request, redirect, url_for
 from dotenv import load_dotenv
 
-from service import ProfileService, AchievementService
-from repository import SteamClient, UserRepository, PlayerRepository, StatsRepository
+from masterofgames.service import ProfileService, AchievementService
+from masterofgames.repository import SteamClient, UserRepository, PlayerRepository, StatsRepository
 
 for file in os.listdir("./"):
     if file.startswith(".env"):
