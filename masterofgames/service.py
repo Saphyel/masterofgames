@@ -17,7 +17,7 @@ class ProfileService:
     def get_profile(self, user_id: str):
         summary = self._user_repository.get_summary(user_id)
         games = [self._game_transformer.transform(game) for game in self._player_repository.find_games(user_id)]
-        summary['games'] = games
+        summary["games"] = games
         return self._profile_transformer.transform(summary)
 
 
@@ -32,7 +32,7 @@ class AchievementService:
         result = []
         for i in range(items):
             detail = details[i]
-            progress = progression['achievements'][i]
+            progress = progression["achievements"][i]
 
             result.append(self._achievement_transformer.transform({**detail, **progress}))
 
@@ -40,6 +40,9 @@ class AchievementService:
 
     def get_achievements(self, user_id: str, app_id: str):
         progression = self._repository.find_achievements(user_id, app_id)
-        return self._game_transformer.transform({'title': progression['gameName'],
-                                                 'achievements': self._get_list(self._repository.game_details(app_id),
-                                                                                progression)})
+        return self._game_transformer.transform(
+            {
+                "title": progression["gameName"],
+                "achievements": self._get_list(self._repository.game_details(app_id), progression),
+            }
+        )

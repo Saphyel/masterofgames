@@ -8,7 +8,7 @@ class MockResponse:
 
     @property
     def text(self) -> str:
-        return 'error'
+        return "error"
 
     def json(self):
         return self._content
