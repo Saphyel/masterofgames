@@ -6,6 +6,7 @@ authors = ["Saphyel"]
 license = "MIT"
 
 [tool.poetry.dependencies]
+appdirs = "^1.4.4"
 flask = "^1.1.2"
 gunicorn = "^20.0.4"
 python = "^3.8"
