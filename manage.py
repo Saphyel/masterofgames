@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from masterofgames.service import ProfileService, AchievementService
 from masterofgames.repository import SteamClient, UserRepository, PlayerRepository, StatsRepository
 
-for file in os.listdir("./"):
+for file in sorted(os.listdir("./"), reverse=True):
     if file.startswith(".env"):
         load_dotenv(file)
 
