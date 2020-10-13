@@ -5,6 +5,9 @@ services:
         build: .
         ports:
             - 8080:80
-        command: gunicorn -b 0.0.0.0:80 manage:app
+        command: flask run --host=0.0.0.0 --port=80
+#        command: gunicorn -b 0.0.0.0:80 manage:app
         volumes:
             - ./:/app:cached
+        environment:
+            - FLASK_ENV=development
