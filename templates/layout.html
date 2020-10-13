@@ -20,13 +20,19 @@
         <span class="font-weight-bold text-dark">:: Master of Games</span>
       </a>
     </nav>
-    <main role="main" class="container is-fluid">
-        <h1 class="mt-4 title is-spaced">{{ self.title() }}</h1>
-        {% block body %}{% endblock %}
+    <main role="main" class="container is-fluid pb-6">
+      <div class="hero">
+        <div class="container">
+          <h1 class="title is-spaced mt-5 mb-6">{{ self.title() }}</h1>
+        </div>
+      </div>
+      {% block body %}{% endblock %}
     </main>
-    <footer class="footer mt-5 mb-4">
-      <div class="container">
-        <p>© 2020 Saphyel.</p>
+    <footer class="footer">
+      <div class="container has-text-dark mb-4">
+        <div class="column is-offset-4 is-4">
+          <p class="text-centered">© 2020 Saphyel.</p>
+        </div>
       </div>
     </footer>
     {% block scripts %}{% endblock %}
