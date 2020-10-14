@@ -4,10 +4,12 @@
  <div class="columns">
         <div class="column">
             <div class="card">
-                <header class="card-header"><p class="card-header-title">{{ profile.persona_name }}</p></header>
+                <header class="card-header">
+                    <p class="title is-4">{{ profile.real_name }}</p>
+                    <p class="subtitle is-6">{{ profile.persona_name }}</p>
+                </header>
                 <div class="card-content">
                     Steam ID: {{ profile.steam_id }}<br/>
-                    Real name: {{ profile.real_name }}<br/>
                     Country code: {{ profile.country_code }}<br/>
                     Total games: {{profile.games|length}}
                 </div>

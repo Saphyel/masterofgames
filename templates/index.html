@@ -1,8 +1,19 @@
 {% extends "layout.html" %}
-{% block title %}Homepage{% endblock %}
+{% block title %}Search profile{% endblock %}
 {% block body %}
-<form method="post" action="{{ url_for('index') }}">
-    <label for="name">Search profile: </label><input type="text" name="name"/>
-    <button>Search</button>
-</form>
+<div class="container">
+    <form class="column is-offset-one-quarter is-half" method="post" action="{{ url_for('index') }}">
+        <div class="field">
+            <label for="name">Steam username: </label>
+            <div class="control">
+                <input class="input is-medium" type="text" name="name"/>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <button class="button is-medium is-fullwidth">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}
