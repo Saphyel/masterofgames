@@ -1,10 +1,14 @@
-FROM python:3.8-slim AS prod
+FROM python:3.8-slim
 
-WORKDIR /app
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 
-RUN pip install poetry;poetry config virtualenvs.create false
+WORKDIR /app
+RUN useradd -m -r user ; chown user /app
+    
+RUN pip install poetry
 ADD poetry.lock pyproject.toml /app/
-RUN poetry install --no-dev
+RUN poetry config virtualenvs.create false ; \
+    poetry install --no-dev
 
 ADD ./ /app
+USER user
