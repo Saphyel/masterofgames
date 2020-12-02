@@ -15,12 +15,16 @@ Getting Started
     pipenv install
 
 ### Built With
-* Python 3.7
+* Python 3.8
 * Flask
 
 ### Tests
 
     pytest
+    
+### Export
+
+    poetry export -f requirements.txt --output requirements.txt
 
 License
 -------
