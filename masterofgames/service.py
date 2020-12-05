@@ -1,33 +1,37 @@
 __strict__ = True
 
-from .repository import UserRepository, PlayerRepository, StatsRepository
+from .model import GameProgress, Profile
+from .repository import (
+    user_repository_find_user_id,
+    user_repository_find_summary,
+    player_repository_find_games,
+    stats_repository_find_achievements,
+    stats_repository_find_details,
+)
 from .transformer import ProfileTransformer, GameTransformer, AchievementTransformer, GameProgressTransformer
 
 
 class ProfileService:
-    def __init__(self, user_repository: UserRepository, player_repository: PlayerRepository):
-        self._user_repository = user_repository
+    def __init__(self):
         self._profile_transformer = ProfileTransformer
-        self._player_repository = player_repository
         self._game_transformer = GameTransformer
 
-    def get_user_id(self, username: str):
-        return self._user_repository.find_user_id(username)
+    def get_user_id(self, username: str) -> str:
+        return user_repository_find_user_id(username)
 
-    def get_profile(self, user_id: str):
-        summary = self._user_repository.get_summary(user_id)
-        games = [self._game_transformer.transform(game) for game in self._player_repository.find_games(user_id)]
+    def get_profile(self, user_id: str) -> Profile:
+        summary = user_repository_find_summary(user_id)
+        games = [self._game_transformer.transform(game) for game in player_repository_find_games(user_id)]
         summary["games"] = games
         return self._profile_transformer.transform(summary)
 
 
 class AchievementService:
-    def __init__(self, repository: StatsRepository):
-        self._repository = repository
+    def __init__(self):
         self._game_transformer = GameProgressTransformer
         self._achievement_transformer = AchievementTransformer
 
-    def _get_list(self, details: list, progression: dict):
+    def _get_list(self, details: list, progression: dict) -> list:
         items = len(details)
         result = []
         for i in range(items):
@@ -38,11 +42,11 @@ class AchievementService:
 
         return result
 
-    def get_achievements(self, user_id: str, app_id: str):
-        progression = self._repository.find_achievements(user_id, app_id)
+    def get_achievements(self, user_id: str, app_id: str) -> GameProgress:
+        progression = stats_repository_find_achievements(user_id, app_id)
         return self._game_transformer.transform(
             {
                 "title": progression["gameName"],
-                "achievements": self._get_list(self._repository.game_details(app_id), progression),
+                "achievements": self._get_list(stats_repository_find_details(app_id), progression),
             }
         )

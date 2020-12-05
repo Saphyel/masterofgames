@@ -15,7 +15,7 @@ Getting Started
     pipenv install
 
 ### Built With
-* Python 3.8
+* Python 3.9
 * Flask
 
 ### Tests

@@ -1,69 +1,51 @@
 __strict__ = True
 
+import os
 import requests
+import functools
+
+steam_api_key = os.environ.get("STEAM_API_KEY")
+
+def client_fetch(endpoint: str, payload: dict = None) -> dict:
+    payload.update({"key": steam_api_key})
+    result = requests.get("https://api.steampowered.com/" + endpoint, params=payload, timeout=10)
+    result.raise_for_status()
+    return result.json()
 
 
-# Wrapper
-class SteamClient:
-    def __init__(self, secret: str):
-        self._secret = secret
-        self._base_url = "https://api.steampowered.com/"
-
-    def fetch(self, endpoint: str, payload: dict = None) -> dict:
-        payload.update({"key": self._secret})
-        result = requests.get(self._base_url + endpoint, params=payload, timeout=3)
-        if result.status_code == 403:
-            raise ValueError("Invalid credentials")
-        if result.status_code >= 500:
-            raise RuntimeError("Server error")
-        return result.json()
+@functools.lru_cache
+def user_repository_find_user_id(name: str) -> str:
+    result = client_fetch("/ISteamUser/ResolveVanityURL/v1/", {"vanityurl": name})
+    response = result["response"]
+    if response["success"] != 1:
+        raise ValueError(response["message"])
+    return response["steamid"]
 
 
-# Read from external source
-class UserRepository:
-    RESOURCE = "ISteamUser/"
-
-    def __init__(self, client: SteamClient):
-        self._client = client
-
-    def find_user_id(self, name: str) -> str:
-        result = self._client.fetch(self.RESOURCE + "ResolveVanityURL/v1/", {"vanityurl": name})
-        response = result["response"]
-        if response["success"] != 1:
-            raise ValueError(response["message"])
-        return response["steamid"]
-
-    def get_summary(self, user_id: str) -> dict:
-        result = self._client.fetch(self.RESOURCE + "GetPlayerSummaries/v2/", {"steamids": user_id})
-        return result["response"]["players"][0]
+@functools.lru_cache
+def user_repository_find_summary(user_id: str) -> dict:
+    result = client_fetch("/ISteamUser/GetPlayerSummaries/v2/", {"steamids": user_id})
+    return result["response"]["players"][0]
 
 
-class PlayerRepository:
-    RESOURCE = "IPlayerService/"
-
-    def __init__(self, client: SteamClient):
-        self._client = client
-
-    def find_games(self, user_id: str) -> list:
-        result = self._client.fetch(self.RESOURCE + "GetOwnedGames/v1/", {"steamid": user_id, "include_appinfo": "1"})
-        return result["response"]["games"]
+@functools.lru_cache
+def player_repository_find_games(user_id: str) -> list:
+    result = client_fetch("/IPlayerService/GetOwnedGames/v1/", {"steamid": user_id, "include_appinfo": "1"})
+    return result["response"]["games"]
 
 
-class StatsRepository:
-    RESOURCE = "ISteamUserStats/"
+@functools.lru_cache
+def stats_repository_find_details(game_id: str) -> list:
+    result = client_fetch("/ISteamUserStats/GetSchemaForGame/v2/", {"appid": game_id})
+    if result == {}:
+        raise ValueError("No stats")
+    return result["game"]["availableGameStats"]["achievements"]
 
-    def __init__(self, client: SteamClient):
-        self._client = client
 
-    def game_details(self, game_id: str) -> list:
-        result = self._client.fetch(self.RESOURCE + "GetSchemaForGame/v2/", {"appid": game_id})
-        if result == {}:
-            raise ValueError("No stats")
-        return result["game"]["availableGameStats"]["achievements"]
-
-    def find_achievements(self, user_id: str, game_id: str) -> dict:
-        result = self._client.fetch(self.RESOURCE + "GetPlayerAchievements/v1/", {"steamid": user_id, "appid": game_id})
-        response = result["playerstats"]
-        if not response["success"]:
-            raise ValueError(response["error"])
-        return response
+@functools.lru_cache
+def stats_repository_find_achievements(user_id: str, game_id: str) -> dict:
+    result = client_fetch("/ISteamUserStats/GetPlayerAchievements/v1/", {"steamid": user_id, "appid": game_id})
+    response = result["playerstats"]
+    if not response["success"]:
+        raise ValueError(response["error"])
+    return response
