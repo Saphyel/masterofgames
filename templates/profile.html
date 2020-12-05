@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}{{ profile.persona_name }} profile{% endblock %}
 {% block body %}
- <div class="columns">
+    <div class="columns">
         <div class="column">
             <div class="card">
                 <header class="card-header">
@@ -11,19 +11,26 @@
                 <div class="card-content">
                     Steam ID: {{ profile.steam_id }}<br/>
                     Country code: {{ profile.country_code }}<br/>
-                    Total games: {{profile.games|length}}
+                    Total games: {{ profile.games|length }}
                 </div>
             </div>
         </div>
     </div>
-    <table class="table is-striped  is-fullwidth">
-        <thead><tr><th>Logo</th><th>Name</th><th>Played</th><th>Progression</th></tr></thead>
+    <table id="games" class="table is-striped  is-fullwidth">
+        <caption>Minimum time played: <input type="text" id="min" name="min"></caption>
+        <thead>
+        <tr>
+            <th>Logo</th>
+            <th>Name</th>
+            <th>Played</th>
+        </tr>
+        </thead>
         <tbody>
         {% for game in profile.games %}
             <tr>
                 <td>
                     {% if game.logo %}
-                        <figure class="image">
+                        <figure class="image is-2by1">
                             <img alt="{{ game.name }} logo"
                                  src="http://media.steampowered.com/steamcommunity/public/images/apps/{{ game.id }}/{{ game.logo }}.jpg"/>
                         </figure>
@@ -31,12 +38,42 @@
                         No logo
                     {% endif %}
                 </td>
-                <td class="pt-6">{{ game.name }}</td>
-                <td class="pt-6">{{ (game.played/60)|round }} hours</td>
-                <td class="pt-6"><a href="{{ url_for('achievements', user_id=profile.steam_id, game_id=game.id) }}">Link</a></td>
+                <td class="pt-6"><a
+                        href="{{ url_for('achievements', user_id=profile.steam_id, game_id=game.id) }}">{{ game.name }}</a>
+                </td>
+                <td class="pt-6" data-order="{{ game.played/60 }}">{{ (game.played/60)|round }} hours</td>
             </tr>
         {% endfor %}
         </tbody>
-        <tfoot><tr><th>Logo</th><th>Name</th><th>Played</th><th>Progression</th></tr></tfoot>
+        <tfoot>
+        <tr>
+            <th>Logo</th>
+            <th>Name</th>
+            <th>Played</th>
+        </tr>
+        </tfoot>
     </table>
+
+    <script>
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var min = parseInt($('#min').val(), 10);
+                var played = parseFloat(data[2]) || 0;
+
+                if ((isNaN(min)) || (min <= played)) {
+                    return true;
+                }
+
+                return false;
+            }
+        );
+        $(document).ready(function () {
+            var table = $('#games').DataTable({
+                paging: false
+            });
+            $('#min').keyup(function () {
+                table.draw();
+            });
+        });
+    </script>
 {% endblock %}

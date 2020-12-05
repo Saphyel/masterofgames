@@ -1,31 +1,69 @@
 {% extends "layout.html" %}
 {% block title %} {{ details.name }}: {{ details.achievements|length }} achievements{% endblock %}
 {% block body %}
-    <table class="table is-striped">
+    <table id="achievements" class="table is-striped display">
         <thead>
-            <tr><th>Icon</th><th>Hidden</th><th>Achieved</th><th>Name</th><th>Description</th><th>Search</th></tr>
+        <tr>
+            <th>Icon</th>
+            <th>Hidden</th>
+            <th>Achieved</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Search</th>
+        </tr>
         </thead>
         <tbody>
-        {% for game in details.achievements %}
+        {% for achievement in details.achievements %}
             <tr>
-                <td>
-                    <figure class="image"><img alt="{{ game.name }} logo" src="{{ game.icon }}"/></figure>
+                <td data-order="{{ loop.index }}">
+                    <figure class="image"><img alt="{{ achievement.name }} logo" src="{{ achievement.icon }}"/></figure>
                 </td>
-                <td class="pt-5"><input type="checkbox" disabled {% if game.hidden == 1 %}checked{% endif %}/></td>
-                <td class="pt-5"><input type="checkbox" disabled {% if game.achieved == 1 %}checked{% endif %}/></td>
-                <td class="pt-5">{{ game.name }}</td>
-                <td class="pt-5">{{ game.description }}</td>
-                <td class="pt-5">{% if game.achieved != 1 %}
-                    <a href="https://www.youtube.com/results?sp=EgIQAQ%253D%253D&search_query={{ details.title }}+{{ game.name }}">
+                <td class="pt-5" data-order="{{ achievement.hidden }}"><input type="checkbox" disabled
+                                                                              {% if achievement.hidden == 1 %}checked{% endif %}/>
+                </td>
+                <td class="pt-5" data-order="{{ achievement.achieved }}"><input type="checkbox" disabled
+                                                                                {% if achievement.achieved == 1 %}checked{% endif %}/>
+                </td>
+                <td class="pt-5">{{ achievement.name }}</td>
+                <td class="pt-5">{{ achievement.description }}</td>
+                <td class="pt-5">{% if achievement.achieved != 1 %}
+                    <a href="https://www.youtube.com/results?sp=EgIQAQ%253D%253D&search_query={{ details.title }}+{{ achievement.name }}">
                         Link
                     </a>
-                    {% endif %}
+                {% endif %}
                 </td>
             </tr>
         {% endfor %}
         </tbody>
         <tfoot>
-            <tr><th>Icon</th><th>Hidden</th><th>Achieved</th><th>Name</th><th>Description</th><th>Search</th></tr>
+        <tr>
+            <th>Icon</th>
+            <th>Hidden</th>
+            <th>Achieved</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Search</th>
+        </tr>
         </tfoot>
     </table>
+    <script>
+        $.fn.dataTable.ext.order['dom-checkbox'] = function (settings, col) {
+            return this.api().column(col, {order: 'index'}).nodes().map(function (td, i) {
+                return $('input', td).prop('checked') ? '1' : '0';
+            });
+        }
+        $(document).ready(function () {
+            $('#achievements').DataTable({
+                paging: false,
+                columns: [
+                    {orderable: false},
+                    null,
+                    null,
+                    null,
+                    {orderable: false},
+                    {orderable: false}
+                ]
+            });
+        });
+    </script>
 {% endblock %}
