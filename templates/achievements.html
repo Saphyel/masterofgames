@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %} {{ details.name }}: {{ details.achievements|length }} achievements{% endblock %}
 {% block body %}
-    <table id="achievements" class="table is-striped display">
+    <table id="achievements" class="table is-striped is-fullwidth display">
         <thead>
         <tr>
             <th>Icon</th>
@@ -18,16 +18,16 @@
                 <td data-order="{{ loop.index }}">
                     <figure class="image"><img alt="{{ achievement.name }} logo" src="{{ achievement.icon }}"/></figure>
                 </td>
-                <td class="pt-5" data-order="{{ achievement.hidden }}"><input type="checkbox" disabled
+                <td data-order="{{ achievement.hidden }}"><input type="checkbox" disabled
                                                                               {% if achievement.hidden == 1 %}checked{% endif %}/>
                 </td>
-                <td class="pt-5" data-order="{{ achievement.achieved }}"><input type="checkbox" disabled
+                <td data-order="{{ achievement.achieved }}"><input type="checkbox" disabled
                                                                                 {% if achievement.achieved == 1 %}checked{% endif %}/>
                 </td>
-                <td class="pt-5">{{ achievement.name }}</td>
-                <td class="pt-5">{{ achievement.description }}</td>
-                <td class="pt-5">{% if achievement.achieved != 1 %}
-                    <a href="https://www.youtube.com/results?sp=EgIQAQ%253D%253D&search_query={{ details.title }}+{{ achievement.name }}">
+                <td>{{ achievement.name }}</td>
+                <td>{{ achievement.description }}</td>
+                <td>{% if achievement.achieved != 1 %}
+                    <a href="https://www.youtube.com/results?sp=EgIQAQ%253D%253D&search_query={{ details.name }}+{{ achievement.name }}">
                         Link
                     </a>
                 {% endif %}

@@ -1,23 +1,22 @@
 {% extends "layout.html" %}
-{% block title %}{{ profile.persona_name }} profile{% endblock %}
+{% block title %}Profile of {{ profile.player.personaname }} {% endblock %}
 {% block body %}
     <div class="columns">
         <div class="column">
             <div class="card">
                 <header class="card-header">
-                    <p class="title is-4">{{ profile.real_name }}</p>
-                    <p class="subtitle is-6">{{ profile.persona_name }}</p>
+                    <p class="title is-4">{{ profile.player.real_name }}</p>
+                    <p class="subtitle is-6">{{ profile.player.persona_name }}</p>
                 </header>
                 <div class="card-content">
-                    Steam ID: {{ profile.steam_id }}<br/>
-                    Country code: {{ profile.country_code }}<br/>
+                    Steam ID: {{ profile.player.steamid }}<br/>
+                    Country code: {{ profile.player.loccountrycode }}<br/>
                     Total games: {{ profile.games|length }}
                 </div>
             </div>
         </div>
     </div>
-    <table id="games" class="table is-striped  is-fullwidth">
-        <caption>Minimum time played: <input type="text" id="min" name="min"></caption>
+    <table id="games" class="table is-striped is-fullwidth">
         <thead>
         <tr>
             <th>Logo</th>
@@ -39,9 +38,9 @@
                     {% endif %}
                 </td>
                 <td class="pt-6"><a
-                        href="{{ url_for('achievements', user_id=profile.steam_id, game_id=game.id) }}">{{ game.name }}</a>
+                        href="{{ url_for('achievements', user_id=profile.player.steamid, game_id=game.appid) }}">{{ game.name }}</a>
                 </td>
-                <td class="pt-6" data-order="{{ game.played/60 }}">{{ (game.played/60)|round }} hours</td>
+                <td class="pt-6" data-order="{{ game.playtime_forever/60 }}">{{ (game.playtime_forever/60)|round }} hours</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -71,7 +70,8 @@
             var table = $('#games').DataTable({
                 paging: false
             });
-            $('#min').keyup(function () {
+            $("#games_wrapper .column:first").html('Minimum time played: <input type="number" id="min" name="min" placeholder="0">');
+            $('#min').bind('click keyup', function () {
                 table.draw();
             });
         });

@@ -1,38 +1,87 @@
 __strict__ = True
 
 from dataclasses import dataclass
+from typing import List
 
 
 @dataclass
-class Profile:
-    steam_id: str
-    persona_name: str
+class Player:
+    steamid: str
+    profilestate: str
+    personaname: str
+    lastlogoff: int
+    profileurl: str
     avatar: str
-    url: str
-    real_name: str
-    country_code: str
-    games: list
+    realname: str
+    timecreated: int
+    loccountrycode: str
+    communityvisibilitystate: int
+    avatarmedium: str
+    avatarfull: str
+    avatarhash: str
+    personastate: int
+    primaryclanid: str
+    personastateflags: int
+    locstatecode: str
 
 
 @dataclass
 class Game:
-    id: int
+    appid: int
     name: str
-    played: int
-    logo: str
+    playtime_forever: int
+    img_logo_url: str
+    playtime_windows_forever: int
+    playtime_mac_forever: int
+    playtime_linux_forever: int
+    img_icon_url: str
+    has_community_visible_stats: any = None
+    playtime_2weeks: int = None
+
+
+@dataclass
+class Profile:
+    player: Player
+    games: List[Game]
+
+
+@dataclass
+class GameAchievement:
+    name: str
+    displayName: str
+    hidden: int
+    icon: str
+    defaultvalue: int
+    icongray: str
+    description: str = None
+
+
+@dataclass
+class PlayerAchievement:
+    apiname: str
+    achieved: int
+    unlocktime: int
+
+
+@dataclass
+class PlayerStats:
+    steamID: str
+    gameName: str
+    achievements: List[PlayerAchievement]
+    success: bool
 
 
 @dataclass
 class Achievement:
     id: str
     name: str
-    description: str
     icon: str
     hidden: bool
     achieved: bool
+    description: str = None
 
 
 @dataclass
 class GameProgress:
     name: str
-    achievements: list
+    achievements: List[Achievement]
