@@ -5,10 +5,12 @@ import os
 import requests
 from typing import List
 
+from requests import HTTPError
+
 from masterofgames.model import Player, Game, GameAchievement, PlayerStats, PlayerAchievement
 
 
-steam_api_key = os.environ.get("STEAM_API_KEY")
+steam_api_key = os.getenv("STEAM_API_KEY", "xxx")
 
 
 def client_fetch(endpoint: str, payload: dict = None) -> dict:
@@ -42,8 +44,8 @@ def player_repository_find_games(user_id: str) -> List[Game]:
 @functools.lru_cache
 def stats_repository_find_details(game_id: str) -> List[GameAchievement]:
     result = client_fetch("/ISteamUserStats/GetSchemaForGame/v2/", {"appid": game_id})
-    if result == {}:
-        raise ValueError("No stats")
+    if result["game"] == {}:
+        raise HTTPError("No details.")
     return [GameAchievement(**achievement) for achievement in result["game"]["availableGameStats"]["achievements"]]
 
 
@@ -51,7 +53,5 @@ def stats_repository_find_details(game_id: str) -> List[GameAchievement]:
 def stats_repository_find_achievements(user_id: str, game_id: str) -> PlayerStats:
     result = client_fetch("/ISteamUserStats/GetPlayerAchievements/v1/", {"steamid": user_id, "appid": game_id})
     response = result["playerstats"]
-    if not response["success"]:
-        raise ValueError(response["error"])
     response["achievements"] = [PlayerAchievement(**achievement) for achievement in response["achievements"]]
     return PlayerStats(**response)
