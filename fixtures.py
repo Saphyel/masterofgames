@@ -1,6 +1,6 @@
 __strict__ = True
 
-from masterofgames.model import Profile, Game, Achievement, Player
+from masterofgames.model import Profile, Game, Achievement, Player, GameProgress
 
 
 def user_data() -> dict:
@@ -71,13 +71,14 @@ def player_data() -> dict:
 
 
 def profile_raw_data() -> dict:
-    return {
-        "response": {
-            "games": player_data()["response"]["games"],
-            "game_count": player_data()["response"]["game_count"],
-            "players": summary_data()["response"]["players"],
-        }
-    }
+    return {"response": {**player_data()["response"], **player_data()["response"], **summary_data()["response"]}}
+
+
+def profile_data() -> Profile:
+    return Profile(
+        Player(**summary_data()["response"]["players"][0]),
+        [Game(**game) for game in player_data()["response"]["games"]],
+    )
 
 
 def game_stats_data() -> dict:
@@ -133,21 +134,29 @@ def player_stats_data() -> dict:
     }
 
 
-def profile_data() -> Profile:
-    return Profile(
-        Player(**summary_data()["response"]["players"][0]),
-        [Game(**game) for game in player_data()["response"]["games"]],
-    )
+def achievement_raw_data() -> dict:
+    return {**game_stats_data(), **player_stats_data()}
 
 
-def achievement_data() -> Achievement:
-    data1 = game_stats_data()["game"]["availableGameStats"]["achievements"][0]
-    data2 = player_stats_data()["playerstats"]["achievements"][0]
-    return Achievement(
-        data1["name"],
-        data1["displayName"],
-        data1.get("description", ""),
-        data1["icon"],
-        data1["hidden"] == 1,
-        data2["achieved"] == 1,
+def achievement_data() -> GameProgress:
+    return GameProgress(
+        name="Rise of the Tomb Raider",
+        achievements=[
+            Achievement(
+                id="NEW_ACHIEVEMENT_3_1",
+                name="Bar Brawl",
+                icon="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/391220/5cb2c2984f03fc1acd72126741b4141ebbc239f1.jpg",
+                hidden=False,
+                achieved=True,
+                description="Melee kill an enemy using a bottle",
+            ),
+            Achievement(
+                id="NEW_ACHIEVEMENT_3_2",
+                name="Blade of Justice",
+                icon="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/391220/918bba7906d55ceff7179ded663d499a4fcf6c84.jpg",
+                hidden=False,
+                achieved=True,
+                description="Perform 25 special stealth kills with the knife",
+            ),
+        ],
     )
