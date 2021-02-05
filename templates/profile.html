@@ -17,7 +17,7 @@
         </div>
     </div>
     <table class="table is-striped  is-fullwidth">
-        <thead><tr><th>Logo</th><th>Name</th><th>Played</th><th>Progression</th></tr></thead>
+        <thead><tr><th>Logo</th><th>Name</th><th>Played</th></tr></thead>
         <tbody>
         {% for game in profile.games %}
             <tr>
@@ -31,12 +31,14 @@
                         No logo
                     {% endif %}
                 </td>
-                <td class="pt-6">{{ game.name }}</td>
+                <td class="pt-6">
+                    <a href="{{ url_for('achievements.achievements', user_id=profile.steam_id, game_id=game.id) }}">
+                        {{ game.name }}
+                    </a></td>
                 <td class="pt-6">{{ (game.played/60)|round }} hours</td>
-                <td class="pt-6"><a href="{{ url_for('achievements', user_id=profile.steam_id, game_id=game.id) }}">Link</a></td>
             </tr>
         {% endfor %}
         </tbody>
-        <tfoot><tr><th>Logo</th><th>Name</th><th>Played</th><th>Progression</th></tr></tfoot>
+        <tfoot><tr><th>Logo</th><th>Name</th><th>Played</th></tr></tfoot>
     </table>
 {% endblock %}

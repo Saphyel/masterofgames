@@ -4,6 +4,9 @@ import requests
 
 
 # Wrapper
+from core.config import Config
+
+
 class SteamClient:
     def __init__(self, secret: str):
         self._secret = secret
@@ -67,3 +70,6 @@ class StatsRepository:
         if not response["success"]:
             raise ValueError(response["error"])
         return response
+
+
+client = SteamClient(Config.STEAM_API_KEY)
