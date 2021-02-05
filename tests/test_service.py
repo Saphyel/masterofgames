@@ -2,27 +2,25 @@ __strict__ = True
 
 from unittest import TestCase, mock
 
-import fixtures
-from masterofgames.service import ProfileService, AchievementService
+from crud.achievement import AchievementService
+from crud.profile import ProfileService
+from tests import fixtures
 
 
 class TestProfileService(TestCase):
-    @mock.patch(
-        "masterofgames.repository.client_fetch", autospec=True, spec_set=True, return_value=fixtures.user_data()
-    )
+    @mock.patch("crawlers.user.client_fetch", autospec=True, spec_set=True, return_value=fixtures.user_data())
     def test_valid_user_data(self, mock_requests) -> None:
         self.assertEqual("666", ProfileService().get_user_id("Saphyel"))
 
-    @mock.patch(
-        "masterofgames.repository.client_fetch", autospec=True, spec_set=True, return_value=fixtures.profile_raw_data()
-    )
-    def test_valid_summary_data(self, mock_requests) -> None:
+    @mock.patch("crawlers.user.client_fetch", autospec=True, spec_set=True, return_value=fixtures.profile_raw_data())
+    @mock.patch("crawlers.player.client_fetch", autospec=True, spec_set=True, return_value=fixtures.profile_raw_data())
+    def test_valid_summary_data(self, mock_requests, mock_requests2) -> None:
         self.assertEqual(fixtures.profile_data(), ProfileService().get_profile("666"))
 
 
 class TestAchievementService(TestCase):
     @mock.patch(
-        "masterofgames.repository.client_fetch",
+        "crawlers.stats.client_fetch",
         autospec=True,
         spec_set=True,
         return_value=fixtures.achievement_raw_data(),

@@ -1,6 +1,6 @@
 __strict__ = True
 
-from masterofgames.model import Profile, Game, Achievement, Player, GameProgress
+from models.model import Profile, Player, Game, GameProgress, Achievement
 
 
 def user_data() -> dict:
