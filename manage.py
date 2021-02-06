@@ -1,15 +1,13 @@
 __strict__ = True
 
 import logging
-import os
 import sys
 
 from dotenv import load_dotenv
-from flask import Flask, render_template, request
 
-for file in sorted(os.listdir("./"), reverse=True):
-    if file.startswith(".env"):
-        load_dotenv(file)
+load_dotenv()
+
+from flask import Flask, render_template, request
 
 from api import homepage, profile, achievements
 
