@@ -35,7 +35,8 @@ def unhandled_exception(error):
 
 @app.before_request
 def add_request_log():
-    app.logger.debug("Matched route.", extra={"channel": "request"})
+    if "/static/" not in request.path:
+        app.logger.debug("Matched route.", extra={"channel": "request", "path": request.path})
 
 
 app.register_blueprint(homepage.blueprint)
