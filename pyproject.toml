@@ -22,6 +22,9 @@ line-length = 120
 target-version = ['py38']
 include = '\.pyi?$'
 
+[tool.pytest.ini_options]
+cache_dir = "/tmp/cache"
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
