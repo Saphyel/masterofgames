@@ -38,7 +38,7 @@
                     {% endif %}
                 </td>
                 <td class="pt-6"><a
-                        href="{{ url_for('achievements', user_id=profile.player.steamid, game_id=game.appid) }}">{{ game.name }}</a>
+                        href="{{ url_for('achievements.achievements', user_id=profile.player.steamid, game_id=game.appid) }}">{{ game.name }}</a>
                 </td>
                 <td class="pt-6" data-order="{{ game.playtime_forever/60 }}">{{ (game.playtime_forever/60)|round }} hours</td>
             </tr>
