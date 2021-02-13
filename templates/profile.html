@@ -28,10 +28,10 @@
         {% for game in profile.games %}
             <tr>
                 <td>
-                    {% if game.logo %}
+                    {% if game.img_logo_url %}
                         <figure class="image is-2by1">
                             <img alt="{{ game.name }} logo"
-                                 src="http://media.steampowered.com/steamcommunity/public/images/apps/{{ game.id }}/{{ game.logo }}.jpg"/>
+                                 src="http://media.steampowered.com/steamcommunity/public/images/apps/{{ game.appid }}/{{ game.img_logo_url }}.jpg"/>
                         </figure>
                     {% else %}
                         No logo
