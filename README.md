@@ -15,11 +15,11 @@ Create a .env file with your secrets and execute
 
 ### Windows Command Prompt
 
-    docker run --rm --env-file .env -v %cd%:/app  -p 8081:80 masterofgames
+    docker run --rm --env-file .env -v %cd%:/app -p 8081:80 -it masterofgames
 
 ### Everything else
 
-    docker run --rm --env-file .env -v ${PWD}:/app  -p 8081:80 masterofgames gunicorn --reload --bind 0.0.0.0:80 manage:app
+    docker run --rm --env-file .env -v ${PWD}:/app -p 8081:80 -it masterofgames gunicorn --reload --bind 0.0.0.0:80 manage:app
 
 ## Test the project
 You'll need to install inside the container the dev dependencies and run pytest
