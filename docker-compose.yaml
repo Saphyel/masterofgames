@@ -1,9 +1,10 @@
 version: '3'
 
 services:
-    webapp:
-        build: .
-        ports: [8080:80]
-        command: gunicorn --reload --bind 0.0.0.0:80 manage:app
-        volumes:
-            - ./:/app:cached
+  webapp:
+    build: .
+    ports: [ "8081:80" ]
+    volumes:
+      - ./:/app/
+    command: gunicorn --reload --bind 0.0.0.0:80 manage:app
+    env_file: [ .env ]
