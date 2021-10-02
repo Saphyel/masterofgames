@@ -8,16 +8,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
-    - name: Install dependencies
+    - name: Build docker image
+      run: docker build -t local .
+    - name: Install dev tools
       run: |
-        python -m pip install --upgrade pip
-        pip install poetry;poetry config virtualenvs.create false
-        poetry install
+        docker run --name app local poetry install
+        docker commit app app
     - name: Check code style
-      run: black --check .
+      run: docker run app black --check .
     - name: Test with pytest
-      run: pytest
+      run: docker run app pytest
