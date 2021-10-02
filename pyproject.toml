@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "masterofgames"
-version = "2.0.1"
+version = "2.1.0"
 description = "Helps you get all the achievements from your games"
 authors = ["Saphyel"]
 license = "MIT"
