@@ -27,6 +27,8 @@ class AchievementService:
 
         return result
 
-    def get_achievements(self, user_id: str, app_id: str) -> GameProgress:
-        progression = find_game_achievements(user_id, app_id)
-        return GameProgress(progression.gameName, self._get_list(find_game_details(app_id), progression.achievements))
+    async def get_achievements(self, user_id: str, app_id: str) -> GameProgress:
+        progression = await find_game_achievements(user_id, app_id)
+        return GameProgress(
+            progression.gameName, self._get_list(await find_game_details(app_id), progression.achievements)
+        )

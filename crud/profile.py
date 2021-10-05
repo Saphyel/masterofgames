@@ -6,8 +6,8 @@ from models.model import Profile
 
 
 class ProfileService:
-    def get_user_id(self, username: str) -> str:
-        return find_user_id(username)
+    async def get_user_id(self, username: str) -> str:
+        return await find_user_id(username)
 
-    def get_profile(self, user_id: str) -> Profile:
-        return Profile(find_user_summary(user_id), find_player_games(user_id))
+    async def get_profile(self, user_id: str) -> Profile:
+        return Profile(await find_user_summary(user_id), await find_player_games(user_id))
