@@ -53,6 +53,9 @@ def player_data() -> dict:
                     "playtime_linux_forever": 1533,
                     "img_icon_url": "762057f2b14463ae1cbf0701a4cdb25cf94e8a0c",
                     "has_community_visible_stats": True,
+                    "rtime_last_played": 0,
+                    "content_descriptorids": [],
+                    "has_leaderboards": False,
                 },
                 {
                     "appid": 637650,
@@ -64,6 +67,9 @@ def player_data() -> dict:
                     "playtime_linux_forever": 20161,
                     "img_icon_url": "0a99fcc7b08c7240d9146390cf1be28451aeef73",
                     "has_community_visible_stats": True,
+                    "rtime_last_played": 0,
+                    "content_descriptorids": [],
+                    "has_leaderboards": False,
                 },
             ],
         }
@@ -76,8 +82,8 @@ def profile_raw_data() -> dict:
 
 def profile_data() -> Profile:
     return Profile(
-        Player(**summary_data()["response"]["players"][0]),
-        [Game(**game) for game in player_data()["response"]["games"]],
+        player=Player(**summary_data()["response"]["players"][0]),
+        games=[Game(**game) for game in player_data()["response"]["games"]],
     )
 
 

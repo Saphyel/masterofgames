@@ -17,7 +17,4 @@ RUN pip install .
 
 COPY . /app
 
-RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
-USER appuser
-
 CMD gunicorn manage:app --bind=0.0.0.0:$PORT

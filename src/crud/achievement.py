@@ -2,8 +2,8 @@ __strict__ = True
 
 from typing import List
 
-from crawlers.stats import find_game_achievements, find_game_details
-from models.model import GameAchievement, PlayerAchievement, Achievement, GameProgress
+from src.crawlers.stats import find_game_achievements, find_game_details
+from src.models.model import GameAchievement, PlayerAchievement, Achievement, GameProgress
 
 
 class AchievementService:
@@ -16,12 +16,12 @@ class AchievementService:
 
             result.append(
                 Achievement(
-                    detail.name,
-                    detail.displayName,
-                    detail.icon,
-                    detail.hidden == 1,
-                    progress.achieved == 1,
-                    detail.description,
+                    id=detail.name,
+                    name=detail.displayName,
+                    icon=detail.icon,
+                    hidden=detail.hidden == 1,
+                    achieved=progress.achieved == 1,
+                    description=detail.description,
                 )
             )
 
@@ -30,5 +30,6 @@ class AchievementService:
     async def get_achievements(self, user_id: str, app_id: str) -> GameProgress:
         progression = await find_game_achievements(user_id, app_id)
         return GameProgress(
-            progression.gameName, self._get_list(await find_game_details(app_id), progression.achievements)
+            name=progression.gameName,
+            achievements=self._get_list(await find_game_details(app_id), progression.achievements),
         )

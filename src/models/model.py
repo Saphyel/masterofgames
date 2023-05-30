@@ -1,11 +1,10 @@
 __strict__ = True
 
-from dataclasses import dataclass
 from typing import List
+from pydantic import BaseModel
 
 
-@dataclass
-class Player:
+class Player(BaseModel):
     steamid: str
     profilestate: str
     personaname: str
@@ -25,8 +24,7 @@ class Player:
     locstatecode: str
 
 
-@dataclass
-class Game:
+class Game(BaseModel):
     appid: int
     name: str
     playtime_forever: int
@@ -42,14 +40,12 @@ class Game:
     has_leaderboards: bool = None
 
 
-@dataclass
-class Profile:
+class Profile(BaseModel):
     player: Player
     games: List[Game]
 
 
-@dataclass
-class GameAchievement:
+class GameAchievement(BaseModel):
     name: str
     displayName: str
     hidden: int
@@ -59,23 +55,20 @@ class GameAchievement:
     description: str = None
 
 
-@dataclass
-class PlayerAchievement:
+class PlayerAchievement(BaseModel):
     apiname: str
     achieved: int
     unlocktime: int
 
 
-@dataclass
-class PlayerStats:
+class PlayerStats(BaseModel):
     steamID: str
     gameName: str
     achievements: List[PlayerAchievement]
     success: bool
 
 
-@dataclass
-class Achievement:
+class Achievement(BaseModel):
     id: str
     name: str
     icon: str
@@ -84,7 +77,6 @@ class Achievement:
     description: str = None
 
 
-@dataclass
-class GameProgress:
+class GameProgress(BaseModel):
     name: str
     achievements: List[Achievement]
