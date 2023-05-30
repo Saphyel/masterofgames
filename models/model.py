@@ -30,13 +30,16 @@ class Game:
     appid: int
     name: str
     playtime_forever: int
-    img_logo_url: str
     playtime_windows_forever: int
     playtime_mac_forever: int
     playtime_linux_forever: int
     img_icon_url: str
-    has_community_visible_stats: any = None
+    img_logo_url: str = None
+    has_community_visible_stats: bool = None
     playtime_2weeks: int = None
+    rtime_last_played: int = None
+    content_descriptorids: list = None
+    has_leaderboards: bool = None
 
 
 @dataclass

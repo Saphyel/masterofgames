@@ -1,21 +1,23 @@
-[tool.poetry]
+[project]
 name = "masterofgames"
-version = "2.1.0"
+version = "3.0"
 description = "Helps you get all the achievements from your games"
-authors = ["Saphyel"]
-license = "MIT"
+license = {text = "OSL-3.0"}
+authors = [{name = "Saphyel"}]
 
-[tool.poetry.dependencies]
-appdirs = "^1.4.4"
-Flask = {extras = ["async"], version = "^2.0.2"}
-gunicorn = {extras = ["eventlet"], version = "^20.1.0"}
-httpx = "^0.23.0"
-python = "^3.9"
-
-[tool.poetry.dev-dependencies]
-black = "^21.12b0"
-pytest = "^6.2.5"
-pytest-asyncio = "^0.15.1"
+requires-python = ">=3.11"
+dependencies = [
+    "Flask[async]==2.3.2",
+    "gunicorn[eventlet]==20.1.0",
+    "httpx==0.24.1",
+    "uvicorn==0.22.0",
+]
+[project.optional-dependencies]
+test = [
+    "black==23.3.0",
+    "pytest==7.3.1",
+    "pytest-asyncio==0.21.0"
+]
 
 [tool.black]
 line-length = 120
@@ -26,5 +28,5 @@ include = '\.pyi?$'
 cache_dir = "/tmp/cache"
 
 [build-system]
-requires = ["poetry>=1.0.0"]
-build-backend = "poetry.masonry.api"
+requires = ["setuptools>=63.0"]
+build-backend = "setuptools.build_meta"
