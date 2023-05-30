@@ -28,19 +28,19 @@
         {% for game in profile.games %}
             <tr>
                 <td>
-                    {% if game.img_logo_url %}
-                        <figure class="image is-2by1">
+                    {% if game.img_icon_url %}
+                        <figure class="image is-48x48">
                             <img alt="{{ game.name }} logo"
-                                 src="http://media.steampowered.com/steamcommunity/public/images/apps/{{ game.appid }}/{{ game.img_logo_url }}.jpg"/>
+                                 src="http://media.steampowered.com/steamcommunity/public/images/apps/{{ game.appid }}/{{ game.img_icon_url }}.jpg"/>
                         </figure>
                     {% else %}
                         No logo
                     {% endif %}
                 </td>
-                <td class="pt-6"><a
+                <td class="pt-4"><a
                         href="{{ url_for('achievements.achievements', user_id=profile.player.steamid, game_id=game.appid) }}">{{ game.name }}</a>
                 </td>
-                <td class="pt-6" data-order="{{ game.playtime_forever/60 }}">{{ (game.playtime_forever/60)|round }} hours</td>
+                <td class="pt-4" data-order="{{ game.playtime_forever/60 }}">{{ (game.playtime_forever/60)|round }} hours</td>
             </tr>
         {% endfor %}
         </tbody>
