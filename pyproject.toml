@@ -8,6 +8,7 @@ authors = [{name = "Saphyel"}]
 requires-python = ">=3.11"
 dependencies = [
     "Flask[async]==2.3.2",
+    "pydantic==1.10.8",
     "gunicorn[eventlet]==20.1.0",
     "httpx==0.24.1",
     "uvicorn==0.22.0",
@@ -21,7 +22,7 @@ test = [
 
 [tool.black]
 line-length = 120
-target-version = ['py38']
+target-version = ["py311"]
 include = '\.pyi?$'
 
 [tool.pytest.ini_options]

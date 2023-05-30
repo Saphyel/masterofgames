@@ -8,7 +8,7 @@ from typing import Any
 from flask import Flask, render_template, request
 from werkzeug.sansio.response import Response
 
-from api import homepage, profile, achievements
+from src.api import homepage, profile, achievements
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 

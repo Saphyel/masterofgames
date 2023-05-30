@@ -12,7 +12,7 @@ jobs:
       run: docker build -t local .
     - name: Install dev tools
       run: |
-        docker run --name app local poetry install
+        docker run --name app local pip install .[test]
         docker commit app app
     - name: Check code style
       run: docker run app black --check .

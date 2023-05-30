@@ -2,8 +2,8 @@ __strict__ = True
 
 from typing import List
 
-from crawlers.base import client_fetch
-from models.model import Game
+from src.crawlers.base import client_fetch
+from src.models.model import Game
 
 
 async def find_player_games(user_id: str) -> List[Game]:

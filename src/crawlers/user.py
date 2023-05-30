@@ -1,7 +1,7 @@
 __strict__ = True
 
-from crawlers.base import client_fetch
-from models.model import Player
+from src.crawlers.base import client_fetch
+from src.models.model import Player
 
 
 async def find_user_id(name: str) -> str:
