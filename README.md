@@ -1,7 +1,6 @@
 # Master of Games
 This app aims to help people to complete their games returning a youtube search for every missing achievement given a game.
 
-
 ## Prerequisites
 * Docker
 * Steam API Key (https://steamcommunity.com/dev)
