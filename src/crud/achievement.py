@@ -30,5 +30,6 @@ class AchievementService:
     async def get_achievements(self, user_id: str, app_id: str) -> GameProgress:
         progression = await find_game_achievements(user_id, app_id)
         return GameProgress(
-            name=progression.gameName, achievements=self._get_list(await find_game_details(app_id), progression.achievements)
+            name=progression.gameName,
+            achievements=self._get_list(await find_game_details(app_id), progression.achievements),
         )

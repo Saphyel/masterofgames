@@ -24,7 +24,6 @@ class Player(BaseModel):
     locstatecode: str
 
 
-
 class Game(BaseModel):
     appid: int
     name: str
@@ -41,11 +40,9 @@ class Game(BaseModel):
     has_leaderboards: bool = None
 
 
-
 class Profile(BaseModel):
     player: Player
     games: List[Game]
-
 
 
 class GameAchievement(BaseModel):
@@ -58,12 +55,10 @@ class GameAchievement(BaseModel):
     description: str = None
 
 
-
 class PlayerAchievement(BaseModel):
     apiname: str
     achieved: int
     unlocktime: int
-
 
 
 class PlayerStats(BaseModel):
@@ -73,7 +68,6 @@ class PlayerStats(BaseModel):
     success: bool
 
 
-
 class Achievement(BaseModel):
     id: str
     name: str
@@ -81,7 +75,6 @@ class Achievement(BaseModel):
     hidden: bool
     achieved: bool
     description: str = None
-
 
 
 class GameProgress(BaseModel):

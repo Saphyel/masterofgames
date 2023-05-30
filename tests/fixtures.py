@@ -55,8 +55,7 @@ def player_data() -> dict:
                     "has_community_visible_stats": True,
                     "rtime_last_played": 0,
                     "content_descriptorids": [],
-                    "has_leaderboards": False
-
+                    "has_leaderboards": False,
                 },
                 {
                     "appid": 637650,
@@ -70,7 +69,7 @@ def player_data() -> dict:
                     "has_community_visible_stats": True,
                     "rtime_last_played": 0,
                     "content_descriptorids": [],
-                    "has_leaderboards": False
+                    "has_leaderboards": False,
                 },
             ],
         }
@@ -146,4 +145,24 @@ def achievement_raw_data() -> dict:
 
 
 def achievement_data() -> GameProgress:
-    return GameProgress(name='Rise of the Tomb Raider', achievements=[Achievement(id='NEW_ACHIEVEMENT_3_1', name='Bar Brawl', icon='https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/391220/5cb2c2984f03fc1acd72126741b4141ebbc239f1.jpg', hidden=False, achieved=True, description='Melee kill an enemy using a bottle'), Achievement(id='NEW_ACHIEVEMENT_3_2', name='Blade of Justice', icon='https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/391220/918bba7906d55ceff7179ded663d499a4fcf6c84.jpg', hidden=False, achieved=True, description='Perform 25 special stealth kills with the knife')])
+    return GameProgress(
+        name="Rise of the Tomb Raider",
+        achievements=[
+            Achievement(
+                id="NEW_ACHIEVEMENT_3_1",
+                name="Bar Brawl",
+                icon="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/391220/5cb2c2984f03fc1acd72126741b4141ebbc239f1.jpg",
+                hidden=False,
+                achieved=True,
+                description="Melee kill an enemy using a bottle",
+            ),
+            Achievement(
+                id="NEW_ACHIEVEMENT_3_2",
+                name="Blade of Justice",
+                icon="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/391220/918bba7906d55ceff7179ded663d499a4fcf6c84.jpg",
+                hidden=False,
+                achieved=True,
+                description="Perform 25 special stealth kills with the knife",
+            ),
+        ],
+    )
