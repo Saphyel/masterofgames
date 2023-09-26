@@ -2,7 +2,7 @@ __strict__ = True
 
 import httpx
 
-from src.core.config import Config
+from masterofgames.core.config import Config
 
 
 async def client_fetch(endpoint: str, payload: dict = None) -> dict:

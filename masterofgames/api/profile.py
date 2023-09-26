@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, abort
 
-from src.crud.profile import ProfileService
+from masterofgames.crud.profile import ProfileService
 
 blueprint = Blueprint("profile", __name__)
 

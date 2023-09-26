@@ -1,8 +1,8 @@
 __strict__ = True
 
-from src.crawlers.player import find_player_games
-from src.crawlers.user import find_user_id, find_user_summary
-from src.models.model import Profile
+from masterofgames.crawlers.player import find_player_games
+from masterofgames.crawlers.user import find_user_id, find_user_summary
+from masterofgames.models.model import Profile
 
 
 class ProfileService:

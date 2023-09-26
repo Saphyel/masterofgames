@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, abort
 
-from src.crud.achievement import AchievementService
+from masterofgames.crud.achievement import AchievementService
 
 blueprint = Blueprint("achievements", __name__)
 

@@ -2,8 +2,8 @@ __strict__ = True
 
 from typing import List
 
-from src.crawlers.base import client_fetch
-from src.models.model import GameAchievement, PlayerStats, PlayerAchievement
+from masterofgames.crawlers.base import client_fetch
+from masterofgames.models.model import GameAchievement, PlayerStats, PlayerAchievement
 
 
 async def find_game_details(game_id: str) -> List[GameAchievement]:
