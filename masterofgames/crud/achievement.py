@@ -2,8 +2,8 @@ __strict__ = True
 
 from typing import List
 
-from src.crawlers.stats import find_game_achievements, find_game_details
-from src.models.model import GameAchievement, PlayerAchievement, Achievement, GameProgress
+from masterofgames.crawlers.stats import find_game_achievements, find_game_details
+from masterofgames.models.model import GameAchievement, PlayerAchievement, Achievement, GameProgress
 
 
 class AchievementService:

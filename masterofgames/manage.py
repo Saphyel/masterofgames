@@ -8,11 +8,11 @@ from typing import Any
 from flask import Flask, render_template, request
 from werkzeug.sansio.response import Response
 
-from src.api import homepage, profile, achievements
+from masterofgames.api import homepage, profile, achievements
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="../templates/", static_folder="../static/")
 app.register_blueprint(homepage.blueprint)
 app.register_blueprint(profile.blueprint)
 app.register_blueprint(achievements.blueprint)

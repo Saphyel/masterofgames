@@ -18,7 +18,7 @@ Create a .env file with your secrets and execute
 
 ### Everything else
 
-    docker run --rm --env-file .env -v ${PWD}:/app -p 8081:80 -it masterofgames gunicorn --reload --bind 0.0.0.0:80 manage:app
+    sudo docker run --rm --env-file .env -v ${PWD}/pyproject.toml:/app/pyproject.toml -v ${PWD}/masterofgames/:/app/masterofgames/ -v ${PWD}/static:/app/static/ -v ${PWD}/templates:/app/templates/ -v ${PWD}/tests:/app/tests/ -p 8081:80 -it masterofgames gunicorn --reload --bind 0.0.0.0:80 masterofgames.manage:app
 
 ## Test the project
 You'll need to install inside the container the dev dependencies and run pytest
