@@ -17,4 +17,4 @@ jobs:
     - name: Check code style
       run: docker run app black --check .
     - name: Test with pytest
-      run: docker run app pytest
+      run: docker run -v ./tests:/app/tests app pytest
