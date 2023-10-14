@@ -17,15 +17,11 @@ from masterofgames.controllers import view_router
 logging_middleware_config = LoggingMiddlewareConfig()
 
 
-def raise_on_4xx_5xx(response):
-    response.raise_for_status()
-
-
 @asynccontextmanager
 async def http_client(app: Litestar) -> AsyncGenerator[None, None]:
     client = getattr(app.state, "client", None)
     if client is None:
-        app.state.client = httpx.AsyncClient(base_url=config.steam_url, event_hooks={"response": [raise_on_4xx_5xx]})
+        app.state.client = httpx.AsyncClient(base_url=config.steam_url)
         app.state.api_key = config.steam_api_key
 
     try:
