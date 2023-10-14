@@ -4,9 +4,13 @@ from typing import List
 from pydantic import BaseModel
 
 
+class IndexInput(BaseModel):
+    name: str
+
+
 class Player(BaseModel):
     steamid: str
-    profilestate: str
+    profilestate: str | int
     personaname: str
     lastlogoff: int
     profileurl: str
@@ -32,12 +36,12 @@ class Game(BaseModel):
     playtime_mac_forever: int
     playtime_linux_forever: int
     img_icon_url: str
-    img_logo_url: str = None
-    has_community_visible_stats: bool = None
-    playtime_2weeks: int = None
-    rtime_last_played: int = None
-    content_descriptorids: list = None
-    has_leaderboards: bool = None
+    img_logo_url: str | None = None
+    has_community_visible_stats: bool | None = None
+    playtime_2weeks: int | None = None
+    rtime_last_played: int | None = None
+    content_descriptorids: list | None = None
+    has_leaderboards: bool | None = None
 
 
 class Profile(BaseModel):
@@ -52,7 +56,7 @@ class GameAchievement(BaseModel):
     icon: str
     defaultvalue: int
     icongray: str
-    description: str = None
+    description: str | None = None
 
 
 class PlayerAchievement(BaseModel):
@@ -74,7 +78,7 @@ class Achievement(BaseModel):
     icon: str
     hidden: bool
     achieved: bool
-    description: str = None
+    description: str | None = None
 
 
 class GameProgress(BaseModel):

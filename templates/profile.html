@@ -1,79 +1,77 @@
 {% extends "layout.html" %}
 {% block title %}Profile of {{ profile.player.personaname }} {% endblock %}
 {% block body %}
-    <div class="columns">
-        <div class="column">
-            <div class="card">
-                <header class="card-header">
-                    <p class="title is-4">{{ profile.player.real_name }}</p>
-                    <p class="subtitle is-6">{{ profile.player.persona_name }}</p>
-                </header>
-                <div class="card-content">
-                    Steam ID: {{ profile.player.steamid }}<br/>
-                    Country code: {{ profile.player.loccountrycode }}<br/>
-                    Total games: {{ profile.games|length }}
-                </div>
+<div class="columns">
+    <div class="column">
+        <div class="card">
+            <header class="card-header">
+                <p class="title is-4">{{ profile.player.real_name }}</p>
+                <p class="subtitle is-6">{{ profile.player.persona_name }}</p>
+            </header>
+            <div class="card-content">
+                Steam ID: {{ profile.player.steamid }}<br/>
+                Country code: {{ profile.player.loccountrycode }}<br/>
+                Total games: {{ profile.games|length }}
             </div>
         </div>
     </div>
-    <table id="games" class="table is-striped is-fullwidth">
-        <thead>
-        <tr>
-            <th>Logo</th>
-            <th>Name</th>
-            <th>Played</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for game in profile.games %}
-            <tr>
-                <td>
-                    {% if game.img_icon_url %}
-                        <figure class="image is-48x48">
-                            <img alt="{{ game.name }} logo"
-                                 src="http://media.steampowered.com/steamcommunity/public/images/apps/{{ game.appid }}/{{ game.img_icon_url }}.jpg"/>
-                        </figure>
-                    {% else %}
-                        No logo
-                    {% endif %}
-                </td>
-                <td class="pt-4"><a
-                        href="{{ url_for('achievements.achievements', user_id=profile.player.steamid, game_id=game.appid) }}">{{ game.name }}</a>
-                </td>
-                <td class="pt-4" data-order="{{ game.playtime_forever/60 }}">{{ (game.playtime_forever/60)|round }} hours</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        <tfoot>
-        <tr>
-            <th>Logo</th>
-            <th>Name</th>
-            <th>Played</th>
-        </tr>
-        </tfoot>
-    </table>
+</div>
+<table id="games" class="table is-striped is-fullwidth">
+    <thead>
+    <tr>
+        <th>Logo</th>
+        <th>Name</th>
+        <th>Played</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for game in profile.games %}
+    <tr>
+        <td>
+            {% if game.img_icon_url %}
+            <figure class="image is-48x48">
+                <img alt="{{ game.name }} logo"
+                     src="http://media.steampowered.com/steamcommunity/public/images/apps/{{ game.appid }}/{{ game.img_icon_url }}.jpg"/>
+            </figure>
+            {% else %}
+            No logo
+            {% endif %}
+        </td>
+        <td class="pt-4"><a href="/{{ profile.player.steamid }}/{{ game.appid }}">{{ game.name }}</a></td>
+        <td class="pt-4" data-order="{{ game.playtime_forever/60 }}">{{ (game.playtime_forever/60)|round }} hours</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>Logo</th>
+        <th>Name</th>
+        <th>Played</th>
+    </tr>
+    </tfoot>
+</table>
 
-    <script>
-        $.fn.dataTable.ext.search.push(
-            function (settings, data, dataIndex) {
-                var min = parseInt($('#min').val(), 10);
-                var played = parseFloat(data[2]) || 0;
+<script>
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = parseInt($('#min').val(), 10);
+            var played = parseFloat(data[2]) || 0;
 
-                if ((isNaN(min)) || (min <= played)) {
-                    return true;
-                }
-
-                return false;
+            if ((isNaN(min)) || (min <= played)) {
+                return true;
             }
-        );
-        $(document).ready(function () {
-            var table = $('#games').DataTable({
-                paging: false
-            });
-            $("#games_wrapper .column:first").html('Minimum time played: <input type="number" id="min" name="min" placeholder="0">');
-            $('#min').bind('click keyup', function () {
-                table.draw();
-            });
+
+            return false;
+        }
+    );
+    $(document).ready(function () {
+        var table = $('#games').DataTable({
+            paging: false
         });
-    </script>
+        $("#games_wrapper .column:first").html('Minimum time played: <input type="number" id="min" name="min" placeholder="0">');
+        $('#min').bind('click keyup', function () {
+            table.draw();
+        });
+    });
+</script>
 {% endblock %}

@@ -4,32 +4,52 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "masterofgames"
-version = "4.0"
+version = "5.0"
 description = "Helps you get all the achievements from your games"
 license = {text = "OSL-3.0"}
 authors = [{name = "Saphyel"}]
 
 requires-python = ">=3.11"
 dependencies = [
-    "Flask[async]<2.4",
-    "pydantic<1.11",
-    "gunicorn[eventlet]<21.3",
+    "litestar[jinja]<2.3",
+    "pydantic-settings<2.1",
+    "uvicorn[standard]<0.24",
     "httpx<0.26",
-    "uvicorn<0.24",
 ]
 [project.optional-dependencies]
 test = [
     "black<23.10",
+    "mypy<1.7",
     "pytest<7.5",
+    "pytest-cov<4.2",
     "pytest-asyncio<0.22"
 ]
 [tool.setuptools.packages.find]
 include = ["masterofgames"]
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"]}
 
 [tool.black]
 line-length = 120
-target-version = ["py311"]
+target-version = ['py311']
 include = '\.pyi?$'
+
+[tool.mypy]
+ignore_missing_imports = true
+warn_no_return = false
+warn_return_any = false
+follow_imports = "skip"
+strict_optional = true
+exclude = [
+    "^build/"
+]
 
 [tool.pytest.ini_options]
 cache_dir = "/tmp/cache"
+
+[tool.coverage.run]
+branch = true
+omit = ["tests/*"]
+[tool.coverage.report]
+skip_empty = true
+show_missing = true

@@ -2,8 +2,14 @@ __strict__ = True
 
 from typing import List
 
-from masterofgames.crawlers.stats import find_game_achievements, find_game_details
-from masterofgames.models.model import GameAchievement, PlayerAchievement, Achievement, GameProgress
+from masterofgames.client import (
+    find_player_games,
+    find_game_achievements,
+    find_game_details,
+    find_user_id,
+    find_user_summary,
+)
+from masterofgames.entities import GameAchievement, PlayerAchievement, Achievement, GameProgress, Profile
 
 
 class AchievementService:
@@ -33,3 +39,11 @@ class AchievementService:
             name=progression.gameName,
             achievements=self._get_list(await find_game_details(app_id), progression.achievements),
         )
+
+
+class ProfileService:
+    async def get_user_id(self, username: str) -> str:
+        return await find_user_id(username)
+
+    async def get_profile(self, user_id: str) -> Profile:
+        return Profile(player=await find_user_summary(user_id), games=await find_player_games(user_id))
