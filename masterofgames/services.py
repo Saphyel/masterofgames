@@ -2,6 +2,8 @@ __strict__ = True
 
 from typing import List
 
+import httpx
+
 from masterofgames.client import (
     find_player_games,
     find_game_achievements,
@@ -33,17 +35,19 @@ class AchievementService:
 
         return result
 
-    async def get_achievements(self, user_id: str, app_id: str) -> GameProgress:
-        progression = await find_game_achievements(user_id, app_id)
+    async def get_achievements(self, client: httpx.AsyncClient, user_id: str, app_id: str, key: str) -> GameProgress:
+        progression = await find_game_achievements(client, user_id, app_id, key)
         return GameProgress(
             name=progression.gameName,
-            achievements=self._get_list(await find_game_details(app_id), progression.achievements),
+            achievements=self._get_list(await find_game_details(client, app_id, key), progression.achievements),
         )
 
 
 class ProfileService:
-    async def get_user_id(self, username: str) -> str:
-        return await find_user_id(username)
+    async def get_user_id(self, client: httpx.AsyncClient, username: str, key: str) -> str:
+        return await find_user_id(client, username, key)
 
-    async def get_profile(self, user_id: str) -> Profile:
-        return Profile(player=await find_user_summary(user_id), games=await find_player_games(user_id))
+    async def get_profile(self, client: httpx.AsyncClient, user_id: str, key: str) -> Profile:
+        return Profile(
+            player=await find_user_summary(client, user_id, key), games=await find_player_games(client, user_id, key)
+        )
