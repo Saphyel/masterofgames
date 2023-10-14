@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "masterofgames"
-version = "5.0"
+version = "5.1"
 description = "Helps you get all the achievements from your games"
 license = {text = "OSL-3.0"}
 authors = [{name = "Saphyel"}]
