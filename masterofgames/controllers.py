@@ -40,12 +40,12 @@ class ProfileViewController(Controller):
                 template_name="profile.html",
                 context={"profile": await service.get_profile(state.client, user_id, state.api_key)},
             )
-        except ValueError as error:
+        except ValueError:
             raise HTTPException(
                 status_code=400,
                 detail="Cannot or will not process the request due to something that is perceived to be a client error.",
             )
-        except RuntimeError as error:
+        except RuntimeError:
             raise HTTPException(status_code=404, detail="Cannot find the requested resource.")
 
     @get(path="{user_id:str}/{game_id:str}")
@@ -62,7 +62,7 @@ class ProfileViewController(Controller):
                 status_code=400,
                 detail="Cannot or will not process the request due to something that is perceived to be a client error.",
             )
-        except RuntimeError as error:
+        except RuntimeError:
             raise HTTPException(status_code=404, detail="Cannot find the requested resource.")
 
 

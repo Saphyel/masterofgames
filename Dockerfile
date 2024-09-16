@@ -7,8 +7,8 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 ENV PIP_NO_CACHE_DIR=1
 ENV PIP_ROOT_USER_ACTION=ignore
 
-ENV LITESTAR_APP masterofgames.web:app
-ENV PORT 80
+ENV LITESTAR_APP=masterofgames.web:app
+ENV PORT=80
 EXPOSE $PORT
 
 WORKDIR /app
@@ -24,4 +24,4 @@ COPY templates/ ./templates/
 #RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app/
 #USER appuser
 
-CMD uvicorn masterofgames.web:app --host 0.0.0.0 --port $PORT
+CMD uvicorn masterofgames.web:app --host 0.0.0.0 --port ${PORT}

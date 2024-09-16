@@ -15,6 +15,6 @@ jobs:
         docker run --name app local pip install .[test]
         docker commit app app
     - name: Check code style
-      run: docker run app black --check .
+      run: docker run app ruff check .
     - name: Test with pytest
       run: docker run -v ./tests:/app/tests -e STEAM_API_KEY=steam_api_key app pytest
