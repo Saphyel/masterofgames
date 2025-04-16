@@ -1,4 +1,4 @@
-FROM python:3.11
+FROM python:3.12
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -24,4 +24,4 @@ COPY templates/ ./templates/
 #RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app/
 #USER appuser
 
-CMD uvicorn masterofgames.web:app --host 0.0.0.0 --port ${PORT}
+CMD ["uvicorn", "masterofgames.web:app", "--host", "0.0.0.0", "--port", "${PORT}"]

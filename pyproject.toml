@@ -11,18 +11,18 @@ authors = [{name = "Saphyel"}]
 
 requires-python = ">=3.11"
 dependencies = [
-    "httpx<0.28",
-    "litestar[jinja]<2.12",
-    "pydantic-settings<2.6",
-    "uvicorn[standard]<0.31",
+    "httpx<0.29",
+    "litestar[jinja]<2.16",
+    "pydantic-settings<2.9",
+    "uvicorn[standard]<0.35",
 ]
 [project.optional-dependencies]
 test = [
-    "mypy<1.12",
-    "pytest-asyncio<0.25",
-    "coverage<9.1",
+    "mypy<1.16",
+    "pytest-asyncio<0.27",
+    "coverage<7.9",
     "pytest<8.4",
-    "ruff<0.7",
+    "ruff<0.12",
 ]
 [tool.setuptools.packages.find]
 include = ["masterofgames"]
